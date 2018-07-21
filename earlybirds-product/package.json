@@ -1,0 +1,51 @@
+{
+  "name": "EarlyBirds",
+  "version": "1.0.0",
+  "description": "Microservice dedicated to the products",
+  "author": "Pierre RAFFA",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run serve || npm run watch",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
+    "build": "npm run build-ts && npm run tslint",
+    "serve": "node build/server.js",
+    "watch-node": "nodemon build/server.js",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "tslint": "tslint -c tslint.json -p tsconfig.json"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "chalk": "^2.3.2",
+    "compression": "^1.7.3",
+    "dotenv": "^4.0.0",
+    "errorhandler": "^1.5.0",
+    "express": "^4.16.2",
+    "express-validator": "^5.2.0",
+    "helmet": "^3.12.2",
+    "if-env": "^1.0.4",
+    "lodash": "^4.17.5",
+    "morgan": "^1.9.0",
+    "qs": "^6.5.2",
+    "request": "^2.87.0",
+    "winston": "^2.4.3"
+  },
+  "devDependencies": {
+    "@types/compression": "0.0.35",
+    "@types/dotenv": "^4.0.2",
+    "@types/errorhandler": "0.0.32",
+    "@types/es6-promise": "^3.3.0",
+    "@types/express": "^4.16.0",
+    "@types/lodash": "^4.14.112",
+    "@types/morgan": "^1.7.35",
+    "@types/node": "^7.0.67",
+    "@types/qs": "^6.5.1",
+    "@types/request": "^2.47.1",
+    "@types/winston": "^2.3.9",
+    "chai": "^4.1.2",
+    "concurrently": "^3.6.0",
+    "nodemon": "^1.18.3",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.11.0",
+    "typescript": "^2.9.2"
+  }
+}
