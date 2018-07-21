@@ -1,13 +1,14 @@
 FROM node:carbon
 
-# Create app directory
-RUN mkdir -p /var/www/ms-service/
-WORKDIR /var/www/ms-service/
+WORKDIR /app
 
 # Install app dependencies
-#COPY package.json /var/www/ms-service/
+COPY package*.json /app/
 
 # Bundle app source
-COPY . /var/www/ms-service/
+COPY . /app
+
+RUN npm install && \
+    npm run build
 
 CMD ["npm", "start"]

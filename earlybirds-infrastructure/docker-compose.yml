@@ -1,0 +1,35 @@
+version: '3'
+services:
+
+  # Mongo Database for the products
+  # ===============================
+ eb-product-mongo:
+    container_name: eb-product-mongo
+    command: --auth
+    build:
+      context: ./eb-product-mongo
+      args: # used by setup.js
+        - mongoInitDbRootUsername=${MONGO_INITDB_ROOT_USERNAME}
+        - mongoInitDbRootPassword=${MONGO_INITDB_ROOT_PASSWORD}
+        - mongoApiPassword=${MONGO_API_PASSWORD}
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/eb-product-mongo/db:/data/db
+
+  # Microservice for the products
+  # =============================
+ eb-product:
+    container_name: eb-product
+    build: ../earlybirds-product
+    environment:
+      NODE_ENV: development
+      MONGO_URI: ${MONGO_URI}
+    ports:
+      - "3000:80"
+    volumes:
+      - ../earlybirds-product:/app
+      - /app/node_modules

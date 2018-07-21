@@ -1,5 +1,6 @@
 import server from './http/server';
 import logger from './logger';
+import { getDatabase } from "./external/db";
 
 const chalk = require('chalk');
 const pkg = require('../package.json');
@@ -23,6 +24,8 @@ export default class App {
 
     this.startHttp();
 
+    await getDatabase();
+
   }
 
   /**
@@ -33,7 +36,8 @@ export default class App {
   protected startHttp(): void {
 
     logger.info(chalk.green('=================================================================================='));
-    logger.info(chalk.green('HTTP_PORT (default 80):           ', process.env.HTTP_PORT));
+    logger.info(chalk.green('HTTP_PORT (default 80): ', process.env.HTTP_PORT));
+    logger.info(chalk.green('MONGO_URI:              ', process.env.MONGO_URI));
     logger.info(chalk.green('=================================================================================='));
 
     server.start({
