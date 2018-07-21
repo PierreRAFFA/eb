@@ -45,8 +45,8 @@ $ npm start
 | ------------------------ | --------------------------------------------------------------------------------------------- |
 | **node_modules**         | Contains all your npm dependencies                                                            |
 | **build**                | Contains the distributable (or output) from your TypeScript build. This is the code you ship  |
+| **commands**             | NPM scripts List |
 | **src**                  | Contains your source code that will be compiled to the dist dir                               |
-| **src/commands**         | NPM scripts List |
 | **src/external**         | Contains all external services (db etc...) |
 | **src/controllers**      | Controllers define functions that respond to an event                                         |
 | **src/types**            | Holds .d.ts files not found on DefinitelyTyped.|

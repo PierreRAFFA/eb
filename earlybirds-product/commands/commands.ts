@@ -1,5 +1,5 @@
 import { argv } from 'yargs';
-import { closeConnection } from "../external/db";
+import { closeConnection } from "../src/external/db";
 
 const commandName: string = argv.command;
 

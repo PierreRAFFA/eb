@@ -103,3 +103,69 @@ YH8131-00-5MK;Polo Golf Lacoste SPORT en mailles ultra légères imprimées;MAN;
   const rows: Array<string> = csv.split('\n');
   return new Buffer(take(rows, numProducts + 1).join('\r\n'), 'utf8');
 }
+
+
+export function generateGoogleVisionResponse(r: number, g: number, b: number): any {
+  return [{
+    faceAnnotations: [],
+    landmarkAnnotations: [],
+    logoAnnotations: [],
+    labelAnnotations: [],
+    textAnnotations: [],
+    safeSearchAnnotation: null,
+    imagePropertiesAnnotation:
+      {
+        dominantColors:
+          {
+            colors:
+              [{
+                color: {red: r, green: g, blue: b, alpha: null},
+                score: 0.8358398675918579,
+                pixelFraction: 0.9921244978904724
+              },
+                {
+                  color: {red: 122, green: 122, blue: 122, alpha: null},
+                  score: 0.0037950356490910053,
+                  pixelFraction: 0.00006300403038039804
+                },
+                {
+                  color: {red: 208, green: 208, blue: 208, alpha: null},
+                  score: 0.15663491189479828,
+                  pixelFraction: 0.007686492055654526
+                },
+                {
+                  color: {red: 94, green: 94, blue: 94, alpha: null},
+                  score: 0.003730170661583543,
+                  pixelFraction: 0.00006300403038039804
+                },
+                {
+                  color: {red: 146, green: 146, blue: 146, alpha: null},
+                  score: 5.3177063447096273e-11,
+                  pixelFraction: 0.00006300403038039804
+                }]
+          }
+      },
+    error: null,
+    cropHintsAnnotation:
+      {
+        cropHints:
+          [{
+            boundingPoly:
+              {
+                vertices:
+                  [{x: 0, y: 0},
+                    {x: 457, y: 0},
+                    {x: 457, y: 442},
+                    {x: 0, y: 442}],
+                normalizedVertices: []
+              },
+            confidence: 0.7999999523162842,
+            importanceFraction: 1
+          }]
+      },
+    fullTextAnnotation: null,
+    webDetection: null,
+    context: null
+  }
+  ];
+}

@@ -1,12 +1,19 @@
 //disable logs
-process.env.LOG_LEVEL = '5';
+import { Product } from "../../src/interfaces";
+
+process.env.LOG_LEVEL = '3';
 
 import { expect } from 'chai';
+import * as sinon from 'sinon';
 import { Given, When, Then, AfterAll, BeforeAll, setDefaultTimeout, setWorldConstructor } from 'cucumber';
-import { closeConnection, getDatabase } from "../../src/external/db";
+import vision from '@google-cloud/vision';
 import MongodbMemoryServer from 'mongodb-memory-server';
+import { filter } from 'lodash';
+import { closeConnection, getDatabase } from "../../src/external/db";
+import { generateGoogleVisionResponse } from "../fixtures/products.fixture";
 import { World } from "../support/World";
 import { ProductObjectModel } from "../support/ProductObjectModel";
+import { Cursor } from "mongodb";
 
 //create mongo server in-memory
 const mongod: any = new MongodbMemoryServer();
@@ -66,7 +73,21 @@ When('I execute the command to import a csv containing {int} rows', function(num
   return pageObjectModel.importProducts(numProducts);
 });
 
+When('I execute the command to get the dominant color for each product', function () {
+  const moackedResponse: any = generateGoogleVisionResponse(10, 20, 30);
+  sinon.stub(vision.ImageAnnotatorClient.prototype, 'imageProperties').resolves(moackedResponse);
+  return pageObjectModel.setProductsColor();
+});
+
 Then('the product collection should contain {int} products', async function (numProducts: number) {
   const count: number = await pageObjectModel.getProductsCount();
   expect(count).equals(numProducts);
+});
+
+Then('it should populate the color for {int} products', async function (numProducts: number) {
+  const products: Array<Product> = await pageObjectModel.getAllProducts();
+
+  const numProductsWithColor: number = filter(products, (product: Product) => product.rgb && product.lab).length;
+
+  expect(numProductsWithColor).equals(numProducts);
 });

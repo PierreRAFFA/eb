@@ -6,7 +6,7 @@ import * as path from 'path';
 import * as expressValidator from 'express-validator';
 
 import * as errorHandler from 'errorhandler';
-import routes from'./routes';
+import routes from './routes';
 import { Request, Response } from "express";
 import * as qs from 'qs';
 import logger from "../logger";
@@ -41,7 +41,8 @@ if (parseInt(process.env.LOG_LEVEL) <= 2) {
     }
   }));
 } else {
-  app.use(morgan(logFormat,{ stream: {
+  app.use(morgan(logFormat, {
+    stream: {
       write: logger.info
     }
   }));
@@ -50,7 +51,7 @@ if (parseInt(process.env.LOG_LEVEL) <= 2) {
 // Middleware to parse the incoming request before the handlers
 ///////////////////////////////////////////////////////////////
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 // Middleware to check the inputs
 /////////////////////////////////
@@ -61,7 +62,7 @@ app.use(expressValidator());
 // to prevent click jacking, among other things. Setting it up is simple.
 app.use(require('helmet')());
 
-app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
+app.use(express.static(path.join(__dirname, 'public'), {maxAge: 31557600000}));
 
 app.use(errorHandler());
 

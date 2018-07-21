@@ -1,9 +1,9 @@
-import { Product } from "../interfaces";
+import { Product } from "../src/interfaces/index";
 import { map, zipObject, forEach, filter } from "lodash";
-import { getDatabase } from "../external/db";
+import { getDatabase } from "../src/external/db";
 import { BulkWriteResult, Collection, Db, OrderedBulkOperation } from "mongodb";
 import chalk from "chalk";
-import logger from "../logger";
+import logger from "../src/logger";
 import * as download from "download";
 
 //parse .env
@@ -28,8 +28,8 @@ export async function execute(argv: any) {
 
       //bulk/upsert the products
       const results: BulkWriteResult = await bulkInsertProducts(ProductCollection, products);
-      logger.info(chalk.bgGreen(`You have just inserted ${results.nUpserted} new products`));
-      logger.info(chalk.bgGreen(`You have just modified ${results.nModified} products`));
+      logger.info(chalk.bgGreen(`Results: You have just inserted ${results.nUpserted} new products`));
+      logger.info(chalk.bgGreen(`         You have just modified ${results.nModified} products`));
     }else{
       logger.error(chalk.bgRed('You should specify an url (npm run products:import http://...)'));
     }
