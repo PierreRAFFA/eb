@@ -18,8 +18,8 @@
             "ES2015",
             "DOM",
             "ScriptHost"
-        ]
-
+        ],
+        "experimentalDecorators": true
     },
     "include": [
         "src/**/*"
