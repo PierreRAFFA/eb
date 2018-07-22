@@ -18,3 +18,10 @@ export interface Product {
   };
   deltaE?: number;
 }
+
+export interface Color {
+  red: number;
+  green: number;
+  blue: number;
+  alpha: number | null;
+}

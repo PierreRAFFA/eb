@@ -12,15 +12,19 @@ import logger from "../src/logger";
 import { rgb } from 'color-convert';
 import { LAB } from "color-convert/conversions";
 import { getDatabase } from "../src/external/db";
-import * as cliProgress from 'cli-progress';
+import { Bar, Presets } from 'cli-progress';
 
 //parse .env
 require('dotenv').config();
+
+const progressBar: Bar = new Bar({}, Presets.shades_classic);
 
 /**
  * Entrypoint
  */
 export async function execute(argv: any = undefined) {
+
+
 
   try {
     //connect to database
@@ -33,8 +37,10 @@ export async function execute(argv: any = undefined) {
     let products: Array<Product> = await ProductCollection.find<Product>().toArray();
 
     //@HARDCODE
-    products = take(products, 10);
+    // products = take(products, 10);
 
+    //start progressbar
+    progressBar.start(products.length, 0);
     logger.info(chalk.bgGreen(`You are getting the dominant color of ${products.length} products`));
 
     //loop on product to get the dominant color
@@ -51,12 +57,16 @@ export async function execute(argv: any = undefined) {
       } else {
         numProductsModified++;
       }
+
+      progressBar.increment(1);
     }
     logger.info(chalk.bgGreen(`Results: ${numProductsModified} out of ${products.length} products color updated `));
   } catch (e) {
     logger.error(chalk.bgRed(e.message));
     logger.error(chalk.bgRed(e.stack));
   }
+
+  progressBar.stop();
 }
 
 /**
@@ -73,7 +83,6 @@ async function getDominantColor(photoURL: string): Promise<Color> {
     const imageProperties = await client.imageProperties(`https:${photoURL}`);
     logger.silly(util.inspect(imageProperties, {depth: undefined}));
     return get(imageProperties, '[0].imagePropertiesAnnotation.dominantColors.colors[0].color') as Color;
-
   } catch (e) {
     logger.error(e.message, e.stack);
     logger.error(e.stack);

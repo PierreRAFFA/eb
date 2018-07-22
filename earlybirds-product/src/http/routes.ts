@@ -14,6 +14,6 @@ router.get('/healthcheck', (req: Request, res: Response) => {
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////// PRODUCT
-router.get('/products/:id/suggestions-color', productController.search);
+router.get('/products/:id/suggestions-color', productController.getSuggestionsByColor);
 
 export default router;
