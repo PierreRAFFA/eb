@@ -16,7 +16,7 @@ export function getColorDeltaE(product1: Product, product2: Product) {
       Math.pow(product1.lab.l - product2.lab.l, 2)
       + Math.pow(product1.lab.a - product2.lab.a, 2)
       + Math.pow(product1.lab.b - product2.lab.b, 2)
-    )
+    );
   }
   return undefined;
 }

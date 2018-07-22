@@ -30,12 +30,22 @@ $ npm run build
 ```bash
 $ npm start
 ```
+  
+## Test with Cucumber
+
+> All scenario are described in features/*.feature
+> Each scenario contains some steps which are executed in features/step-definitions/Step.ts
+
+```bash
+$ npm test
+```
 
 ### Commands
 
 | Npm Script | Description |
 | ------------------------- | ------------------------------------------------------------------------------------------------- |
 | `start`                   | Starts the app. if NODE_ENV is not production, nodemon will watch the files                       |
+| `test`                    | Launches the integration tests|
 | `build`                   | Full build.|
 | `tslint`                  | Runs TSLint on project files                                                                      |
 
@@ -46,6 +56,7 @@ $ npm start
 | **node_modules**         | Contains all your npm dependencies                                                            |
 | **build**                | Contains the distributable (or output) from your TypeScript build. This is the code you ship  |
 | **commands**             | NPM scripts List |
+| **features**             | Contain all scenario to be executed by Cucumber |
 | **src**                  | Contains your source code that will be compiled to the dist dir                               |
 | **src/external**         | Contains all external services (db etc...) |
 | **src/controllers**      | Controllers define functions that respond to an event                                         |

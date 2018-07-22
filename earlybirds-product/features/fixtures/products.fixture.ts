@@ -1,15 +1,18 @@
 import { Product } from "../../src/interfaces";
 import { take } from 'lodash';
 
-export function generateProductData(id: string, title: string): Product {
+export function generateProductData(id: string, title: string, l: number = 0, a: number = 0, b: number = 0): Product {
   return {
-    id: `L${id}`,
+    id: `${id}`,
     title,
     gender_id: 'MAN',
     composition: '100% Coton',
     sleeve: '',
     photo: `image1.lacoste.com/${id}`,
-    url: 'http://'
+    url: 'http://',
+    lab: {
+      l, a, b
+    }
   };
 }
 

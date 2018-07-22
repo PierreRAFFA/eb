@@ -1,7 +1,7 @@
 import * as importProducts from "../../commands/importProducts";
 import * as setProductsColor from "../../commands/setProductsColor";
 import { getDatabase } from "../../src/external/db";
-import { Cursor, Db, InsertWriteOpResult } from "mongodb";
+import { Cursor, Db, InsertOneWriteOpResult, InsertWriteOpResult } from "mongodb";
 import * as fixture from "../fixtures/products.fixture";
 import { Product } from "../../src/interfaces";
 import nock = require("nock");
@@ -56,12 +56,28 @@ export class ProductObjectModel {
   public async createProducts(numProducts: number): Promise<number> {
     const productDatas: Array<Product> = [];
     for (let i = 0; i < numProducts; i++) {
-      productDatas.push(fixture.generateProductData(i.toString(), `TShirt ${i}`));
+      productDatas.push(fixture.generateProductData('p' + i, `TShirt ${i}`));
     }
 
     const db: Db = await getDatabase();
     const results: InsertWriteOpResult = await db.collection('product').insertMany(productDatas);
 
+    return results.insertedCount;
+  }
+
+  /**
+   * Creates a certain amount of products
+   *
+   * @param {number} id
+   * @param {number} l
+   * @param {number} a
+   * @param {number} b
+   * @returns {Promise<Product>}
+   */
+  public async createProduct(id: string, l: number = undefined, a: number  = undefined, b: number  = undefined): Promise<number> {
+    const product: Product = fixture.generateProductData(id, `TShirt ${id}`, l, a, b);
+    const db: Db = await getDatabase();
+    const results: InsertOneWriteOpResult = await db.collection('product').insertOne(product);
     return results.insertedCount;
   }
 

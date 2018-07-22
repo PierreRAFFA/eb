@@ -38,10 +38,12 @@ export default class App {
     logger.info(chalk.green('=================================================================================='));
     logger.info(chalk.green('HTTP_PORT (default 80): ', process.env.HTTP_PORT));
     logger.info(chalk.green('MONGO_URI:              ', process.env.MONGO_URI));
+    logger.info(chalk.green('LOG_LEVEL:              ', process.env.LOG_LEVEL));
     logger.info(chalk.green('=================================================================================='));
 
     server.start({
       port: +process.env.HTTP_PORT || 80,
     });
+
   }
 }
