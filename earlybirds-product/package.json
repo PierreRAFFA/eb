@@ -20,6 +20,7 @@
     "@google-cloud/vision": "^0.21.0",
     "body-parser": "^1.18.3",
     "chalk": "^2.3.2",
+    "cli-progress": "^2.0.0",
     "color-convert": "^1.9.2",
     "compression": "^1.7.3",
     "dotenv": "^4.0.0",
@@ -39,6 +40,7 @@
   },
   "devDependencies": {
     "@types/chai": "^4.1.4",
+    "@types/cli-progress": "^1.8.0",
     "@types/color-convert": "^1.9.0",
     "@types/compression": "0.0.35",
     "@types/cucumber": "^4.0.4",
@@ -61,7 +63,6 @@
     "chai": "^4.1.2",
     "concurrently": "^3.6.0",
     "cucumber": "^4.2.1",
-    "mongodb-memory-server": "^1.9.0",
     "nock": "^9.4.2",
     "nodemon": "^1.18.3",
     "sinon": "^6.1.4",

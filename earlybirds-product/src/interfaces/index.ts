@@ -16,4 +16,5 @@ export interface Product {
     a: number;
     b: number;
   };
+  deltaE?: number;
 }

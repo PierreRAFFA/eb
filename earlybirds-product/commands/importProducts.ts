@@ -22,20 +22,27 @@ export async function execute(argv: any) {
 
       const products: Array<Product> = getProductFromCSV(csv);
 
-      //connect to database
-      const db: Db = await getDatabase();
-      const ProductCollection: Collection<Product> = db.collection('product');
+      if (products.length) {
+        //connect to database
+        const db: Db = await getDatabase();
+        const ProductCollection: Collection<Product> = db.collection('product');
 
-      //bulk/upsert the products
-      const results: BulkWriteResult = await bulkInsertProducts(ProductCollection, products);
-      logger.info(chalk.bgGreen(`Results: You have just inserted ${results.nUpserted} new products`));
-      logger.info(chalk.bgGreen(`         You have just modified ${results.nModified} products`));
+        //bulk/upsert the products
+        const results: BulkWriteResult = await bulkInsertProducts(ProductCollection, products);
+        logger.info(chalk.bgGreen(`Results: You have just inserted ${results.nUpserted} new products`));
+        logger.info(chalk.bgGreen(`         You have just modified ${results.nModified} products`));
+      }else{
+        logger.error(chalk.bgRed('No product found in the csv. The csv may not be well formed'));
+        logger.error(chalk.red('csv: ' + csv));
+      }
+
     }else{
       logger.error(chalk.bgRed('You should specify an url (npm run products:import http://...)'));
     }
 
   } catch (e) {
     console.log(chalk.bgRed(e.message));
+    console.log(chalk.bgRed(e.stack));
   }
 
 };
@@ -47,6 +54,8 @@ export async function execute(argv: any) {
  */
 function getProductFromCSV(csv: string): Array<Product> {
 
+  let products: Array<Product> = [];
+
   //get rows and ignore empty lines
   let rows = csv.split("\r\n");
   rows = filter(rows, row => row != '');
@@ -54,12 +63,17 @@ function getProductFromCSV(csv: string): Array<Product> {
   //get headers
   const headers: Array<string> = rows.shift().split(";");
 
-  //build the product data
-  const products: Array<Product> = map(rows, row => {
-    const values: Array<string> = row.split(";");
-    const product: any = zipObject<string>(headers, values);
-    return product;
-  });
+  //check whether the csv is valid
+  const isCsvValid: boolean = headers && headers.length && headers[0] === 'id';
+
+  if (isCsvValid) {
+    //build the product data
+    products = map(rows, row => {
+      const values: Array<string> = row.split(";");
+      const product: any = zipObject<string>(headers, values);
+      return product;
+    });
+  }
 
   return products;
 }

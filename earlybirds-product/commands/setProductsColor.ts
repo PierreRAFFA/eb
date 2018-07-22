@@ -12,6 +12,7 @@ import logger from "../src/logger";
 import { rgb } from 'color-convert';
 import { LAB } from "color-convert/conversions";
 import { getDatabase } from "../src/external/db";
+import * as cliProgress from 'cli-progress';
 
 //parse .env
 require('dotenv').config();
@@ -54,6 +55,7 @@ export async function execute(argv: any = undefined) {
     logger.info(chalk.bgGreen(`Results: ${numProductsModified} out of ${products.length} products color updated `));
   } catch (e) {
     logger.error(chalk.bgRed(e.message));
+    logger.error(chalk.bgRed(e.stack));
   }
 }
 

@@ -16,8 +16,7 @@ This repository contains:
 ## Start
 
 ```bash
-$ cd earlybirds-infrastructure
-$ docker-compose up
+$ cd earlybirds-product && npm i && cd ../earlybirds-infrastructure && docker-compose up
 ```
   
 ## Import the products
@@ -30,3 +29,4 @@ $ docker exec -it eb-product npm run products:import https://s3.nofilecdn.io/g/v
 ```bash
 $ docker exec -it eb-product npm run products:color
 ```
+
