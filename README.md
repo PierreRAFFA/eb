@@ -39,3 +39,9 @@ $ docker exec -it eb-product npm run products:color
 ```bash
 $ cd earlybirds-product && npm test
 ```
+
+## Endpoint to test the suggestions by color
+```bash
+http://localhost:3000/products/L1212-00-001/suggestions-color
+http://localhost:3000/products/L1212-00-132/suggestions-color
+```
