@@ -17,6 +17,10 @@ This repository contains:
 - Cucumber
 - Winston
   
+## Google Vision Certificate
+
+The certificate has to be replaced in earlybirds-product/certificate.json
+  
 ## Start
 
 ```bash
